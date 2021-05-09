@@ -8,4 +8,5 @@
         <item>Movie</item>
         <item>TV Show</item>
     </string-array>
+    <string name="rating">%1$d/100</string>
 </resources>

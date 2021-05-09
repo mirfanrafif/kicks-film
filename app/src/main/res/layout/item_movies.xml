@@ -17,14 +17,14 @@
         <ImageView
             android:id="@+id/img_thumbnail"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="150dp"
+            android:contentDescription="@string/photo_desc"
+            android:cropToPadding="false"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars"
-            android:cropToPadding="false"
-            android:contentDescription="@string/photo_desc" />
+            tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/nama_film"

@@ -1,4 +1,4 @@
-package com.mirfanrafif.kicksfilm.ui.movies
+package com.mirfanrafif.kicksfilm.ui.tvshow
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -9,8 +9,7 @@ import com.mirfanrafif.kicksfilm.data.entities.MovieEntity
 import com.mirfanrafif.kicksfilm.databinding.ItemMoviesBinding
 import com.mirfanrafif.kicksfilm.ui.detail.DetailFilmActivity
 
-class MoviesAdapter: RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
-
+class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>()  {
     private val movies = ArrayList<MovieEntity>()
 
     fun setData(data: List<MovieEntity>) {
@@ -19,7 +18,7 @@ class MoviesAdapter: RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
         notifyDataSetChanged()
     }
 
-    class MoviesViewHolder(private val binding: ItemMoviesBinding) : RecyclerView.ViewHolder(binding.root){
+    class TvShowViewHolder(private val binding: ItemMoviesBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(movieEntity: MovieEntity) {
             with(binding) {
                 namaFilm.text = movieEntity.title
@@ -28,22 +27,21 @@ class MoviesAdapter: RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailFilmActivity::class.java)
                     intent.putExtra(DetailFilmActivity.EXTRA_ID, movieEntity.id)
-                    intent.putExtra(DetailFilmActivity.EXTRA_TYPE, "movie")
+                    intent.putExtra(DetailFilmActivity.EXTRA_TYPE, "tvshow")
                     itemView.context.startActivity(intent)
                 }
             }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TvShowViewHolder {
         val binding = ItemMoviesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MoviesViewHolder(binding)
+        return TvShowViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TvShowViewHolder, position: Int) {
         holder.bind(movies[position])
     }
 
     override fun getItemCount(): Int = movies.size
-
 }

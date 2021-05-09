@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mirfanrafif.kicksfilm.databinding.FragmentTvShowBinding
-import com.mirfanrafif.kicksfilm.ui.home.HomeViewModel
 import com.mirfanrafif.kicksfilm.ui.movies.MoviesAdapter
+import com.mirfanrafif.kicksfilm.viewmodel.ViewModelFactory
 
 class TvShowFragment : Fragment() {
 
@@ -27,13 +27,17 @@ class TvShowFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
-            val viewModel = ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())[HomeViewModel::class.java]
-            val adapter = MoviesAdapter()
+            val factory = ViewModelFactory.getInstance()
+            val viewModel = ViewModelProvider(requireActivity(), factory)[TvShowViewModel::class.java]
+            val adapter = TvShowAdapter()
             val layoutManager = GridLayoutManager(context, 2)
 
             binding.rvTvShows.adapter = adapter
             binding.rvTvShows.layoutManager = layoutManager
-            adapter.setData(viewModel.getTvShows())
+            viewModel.getAllTvShow().observe(this, {
+                adapter.setData(it)
+            })
+
         }
     }
 }
