@@ -3,6 +3,7 @@ package com.mirfanrafif.kicksfilm.data
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mirfanrafif.kicksfilm.data.entities.MovieEntity
+import com.mirfanrafif.kicksfilm.data.entities.TvShowEntity
 import com.mirfanrafif.kicksfilm.data.source.remote.RemoteDataSource
 import com.mirfanrafif.kicksfilm.data.source.remote.RemoteDataSource.*
 import com.mirfanrafif.kicksfilm.data.source.remote.responses.MovieDetailResponse
@@ -45,24 +46,22 @@ class MovieRepository private constructor(private val remoteDataSource: RemoteDa
         return movies
     }
 
-    override fun getAllTvShows(): LiveData<List<MovieEntity>> {
-        val tvShow = MutableLiveData<List<MovieEntity>>()
+    override fun getAllTvShows(): LiveData<List<TvShowEntity>> {
+        val tvShow = MutableLiveData<List<TvShowEntity>>()
         remoteDataSource.discoverTvShow(object : LoadTvShowCallback {
             override fun onLoadTvShows(tvResponse: TvResponse) {
-                val movieList = ArrayList<MovieEntity>()
-                for (item in tvResponse.results) {
-                    val releaseDate = item.firstAirDate.split("-").toTypedArray()
-                    val movie = MovieEntity(
-                        item.id,
-                        item.name,
+                val tvShowList = tvResponse.results.map {
+                    val releaseDate = it.firstAirDate.split("-").toTypedArray()
+                    TvShowEntity(
+                        it.id,
+                        it.name,
                         releaseDate[0].toInt(),
-                        item.overview,
-                        item.voteAverage,
+                        it.overview,
+                        it.voteAverage,
                         null,
-                        "https://www.themoviedb.org/t/p/w600_and_h900_bestv2${item.backdropPath}")
-                    movieList.add(movie)
+                        "https://www.themoviedb.org/t/p/w600_and_h900_bestv2${it.backdropPath}")
                 }
-                tvShow.postValue(movieList)
+                tvShow.postValue(tvShowList)
             }
 
         })
@@ -90,14 +89,14 @@ class MovieRepository private constructor(private val remoteDataSource: RemoteDa
         return movieLiveData
     }
 
-    override fun getDetailTvShow(id: Int): LiveData<MovieEntity> {
-        val tv = MutableLiveData<MovieEntity>()
+    override fun getDetailTvShow(id: Int): LiveData<TvShowEntity> {
+        val tv = MutableLiveData<TvShowEntity>()
 
         remoteDataSource.getTvShow(id, object : LoadTvShowDetailsCallback {
             override fun onLoadTvShowDetails(tvShowDetailResponse: TvDetailResponse) {
                 val releaseDate = tvShowDetailResponse.firstAirDate.split("-").toTypedArray()
                 val categories = tvShowDetailResponse.genres.joinToString() { it.name }
-                val movie = MovieEntity(
+                val tvShowEntity = TvShowEntity(
                     tvShowDetailResponse.id,
                     tvShowDetailResponse.name,
                     releaseDate[0].toInt(),
@@ -105,7 +104,7 @@ class MovieRepository private constructor(private val remoteDataSource: RemoteDa
                     tvShowDetailResponse.voteAverage,
                     categories,
                     "https://www.themoviedb.org/t/p/w600_and_h900_bestv2${tvShowDetailResponse.backdropPath}")
-                tv.postValue(movie)
+                tv.postValue(tvShowEntity)
             }
 
         })
