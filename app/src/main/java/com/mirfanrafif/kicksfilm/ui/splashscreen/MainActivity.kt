@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import com.mirfanrafif.kicksfilm.R
+import com.mirfanrafif.kicksfilm.databinding.ActivityMainBinding
 import com.mirfanrafif.kicksfilm.ui.home.HomeActivity
 import com.mirfanrafif.kicksfilm.utils.EspressoIdlingResource
 import kotlinx.coroutines.Dispatchers
@@ -12,9 +13,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
     override fun onStart() {

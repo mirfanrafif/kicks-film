@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.mirfanrafif.kicksfilm.R
 import com.mirfanrafif.kicksfilm.data.entities.MovieEntity
 import com.mirfanrafif.kicksfilm.databinding.ItemMoviesBinding
 import com.mirfanrafif.kicksfilm.ui.detail.DetailFilmActivity
@@ -24,7 +25,7 @@ class MoviesAdapter: RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
             with(binding) {
                 namaFilm.text = movieEntity.title
                 tahunFilm.text = movieEntity.year.toString()
-                Glide.with(itemView).load(movieEntity.photo).into(imgThumbnail)
+                Glide.with(itemView).load(movieEntity.photo).placeholder(R.drawable.ic_baseline_broken_image_24).into(imgThumbnail)
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailFilmActivity::class.java)
                     intent.putExtra(DetailFilmActivity.EXTRA_ID, movieEntity.id)

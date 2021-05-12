@@ -5,28 +5,29 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.mirfanrafif.kicksfilm.data.entities.MovieEntity
+import com.mirfanrafif.kicksfilm.R
+import com.mirfanrafif.kicksfilm.data.entities.TvShowEntity
 import com.mirfanrafif.kicksfilm.databinding.ItemMoviesBinding
 import com.mirfanrafif.kicksfilm.ui.detail.DetailFilmActivity
 
 class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>()  {
-    private val movies = ArrayList<MovieEntity>()
+    private val movies = ArrayList<TvShowEntity>()
 
-    fun setData(data: List<MovieEntity>) {
+    fun setData(data: List<TvShowEntity>) {
         movies.clear()
         movies.addAll(data)
         notifyDataSetChanged()
     }
 
     class TvShowViewHolder(private val binding: ItemMoviesBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(movieEntity: MovieEntity) {
+        fun bind(entity: TvShowEntity) {
             with(binding) {
-                namaFilm.text = movieEntity.title
-                tahunFilm.text = movieEntity.year.toString()
-                Glide.with(itemView).load(movieEntity.photo).into(imgThumbnail)
+                namaFilm.text = entity.title
+                tahunFilm.text = entity.year.toString()
+                Glide.with(itemView).load(entity.photo).placeholder(R.drawable.ic_baseline_broken_image_24).into(imgThumbnail)
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailFilmActivity::class.java)
-                    intent.putExtra(DetailFilmActivity.EXTRA_ID, movieEntity.id)
+                    intent.putExtra(DetailFilmActivity.EXTRA_ID, entity.id)
                     intent.putExtra(DetailFilmActivity.EXTRA_TYPE, "tvshow")
                     itemView.context.startActivity(intent)
                 }

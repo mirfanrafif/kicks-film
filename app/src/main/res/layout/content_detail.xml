@@ -39,22 +39,13 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Tahun" />
 
-    <ProgressBar
-        android:id="@+id/rating"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_tahun" />
-
     <TextView
         android:id="@+id/text_rating"
+        style="@style/Heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/Heading"
-        app:layout_constraintEnd_toEndOf="@+id/rating"
-        app:layout_constraintTop_toBottomOf="@+id/rating"
+        app:layout_constraintEnd_toEndOf="@+id/ratingBar"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar"
         tools:text="Rating" />
 
     <TextView
@@ -85,4 +76,13 @@
         app:layout_constraintStart_toStartOf="@+id/director_label"
         app:layout_constraintTop_toBottomOf="@+id/director_label"
         tools:text="Director" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        style="@style/SmallRatingBar"
+        android:layout_marginEnd="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_tahun" />
 </androidx.constraintlayout.widget.ConstraintLayout>

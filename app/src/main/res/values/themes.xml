@@ -22,4 +22,12 @@
     <style name="Heading" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/poppins_semibold</item>
     </style>
+
+    <style name="MyAppBar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">@color/white</item>
+    </style>
+
+    <style name="SmallRatingBar" parent="Widget.AppCompat.RatingBar.Small">
+
+    </style>
 </resources>

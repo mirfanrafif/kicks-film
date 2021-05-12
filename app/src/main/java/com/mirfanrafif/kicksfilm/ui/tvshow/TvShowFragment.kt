@@ -1,15 +1,17 @@
 package com.mirfanrafif.kicksfilm.ui.tvshow
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.mirfanrafif.kicksfilm.data.entities.TvShowEntity
 import com.mirfanrafif.kicksfilm.databinding.FragmentTvShowBinding
-import com.mirfanrafif.kicksfilm.ui.movies.MoviesAdapter
 import com.mirfanrafif.kicksfilm.viewmodel.ViewModelFactory
+import com.mirfanrafif.kicksfilm.vo.Status
 
 class TvShowFragment : Fragment() {
 
@@ -27,7 +29,7 @@ class TvShowFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
-            val factory = ViewModelFactory.getInstance()
+            val factory = ViewModelFactory.getInstance(requireContext())
             val viewModel = ViewModelProvider(requireActivity(), factory)[TvShowViewModel::class.java]
             val adapter = TvShowAdapter()
             val layoutManager = GridLayoutManager(context, 2)
@@ -35,7 +37,19 @@ class TvShowFragment : Fragment() {
             binding.rvTvShows.adapter = adapter
             binding.rvTvShows.layoutManager = layoutManager
             viewModel.getAllTvShow().observe(this, {
-                adapter.setData(it)
+                if (it != null) {
+                    when(it.status) {
+                        Status.LOADING -> binding.tvShowLoading.visibility = View.VISIBLE
+                        Status.SUCCESS -> {
+                            adapter.setData(it.data as List<TvShowEntity>)
+                            binding.tvShowLoading.visibility = View.GONE
+                        }
+                        Status.ERROR -> {
+                            binding.tvShowLoading.visibility = View.GONE
+                            Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
             })
 
         }

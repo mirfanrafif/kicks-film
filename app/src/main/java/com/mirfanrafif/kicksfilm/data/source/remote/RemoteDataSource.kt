@@ -1,12 +1,11 @@
 package com.mirfanrafif.kicksfilm.data.source.remote
 
 import android.util.Log
-import com.mirfanrafif.kicksfilm.data.source.remote.responses.MovieDetailResponse
-import com.mirfanrafif.kicksfilm.data.source.remote.responses.MovieResponse
-import com.mirfanrafif.kicksfilm.data.source.remote.responses.TvDetailResponse
-import com.mirfanrafif.kicksfilm.data.source.remote.responses.TvResponse
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.mirfanrafif.kicksfilm.utils.EspressoIdlingResource
 import com.mirfanrafif.kicksfilm.data.source.remote.api.TmdbService
+import com.mirfanrafif.kicksfilm.data.source.remote.responses.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,15 +25,16 @@ class RemoteDataSource private constructor(private val tmdbService: TmdbService)
         }
     }
 
-    fun discoverMovies(callback: LoadMoviesCallback){
+    fun discoverMovies(): LiveData<ApiResponse<List<MovieItem>>> {
         EspressoIdlingResource.increment()
+        val resultMovie = MutableLiveData<ApiResponse<List<MovieItem>>>()
         tmdbService.getMovieApiService().discoverMovies(API_KEY).enqueue(object :
             Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if (response.isSuccessful) {
                     val data = response.body()
                     if (data != null) {
-                        callback.onLoadMovies(data)
+                        resultMovie.value = ApiResponse.success(data.results)
                         EspressoIdlingResource.decrement()
                     }
                 }
@@ -45,10 +45,11 @@ class RemoteDataSource private constructor(private val tmdbService: TmdbService)
             }
 
         })
-
+        return resultMovie
     }
 
-    fun discoverTvShow(callback: LoadTvShowCallback) {
+    fun discoverTvShow() : LiveData<ApiResponse<List<TvShowItem>>>{
+        val listTvShow = MutableLiveData<ApiResponse<List<TvShowItem>>>()
         EspressoIdlingResource.increment()
         tmdbService.getTvShowApiService().discoverTvShows(API_KEY).enqueue(object :
             Callback<TvResponse> {
@@ -56,7 +57,7 @@ class RemoteDataSource private constructor(private val tmdbService: TmdbService)
                 if (response.isSuccessful) {
                     val tvShowList = response.body()
                     if (tvShowList != null) {
-                        callback.onLoadTvShows(tvShowList)
+                        listTvShow.value = ApiResponse.success(tvShowList.results)
                         EspressoIdlingResource.decrement()
                     }
                 }
@@ -67,9 +68,11 @@ class RemoteDataSource private constructor(private val tmdbService: TmdbService)
             }
 
         })
+        return listTvShow
     }
 
-    fun getMovie(id: Int, callback: LoadMovieDetailsCallback){
+    fun getMovie(id: Int): LiveData<ApiResponse<MovieDetailResponse>>{
+        val movie = MutableLiveData<ApiResponse<MovieDetailResponse>>()
         EspressoIdlingResource.increment()
         tmdbService.getMovieApiService().getMovie(id, API_KEY).enqueue(object : Callback<MovieDetailResponse> {
             override fun onResponse(
@@ -80,7 +83,7 @@ class RemoteDataSource private constructor(private val tmdbService: TmdbService)
                     val data = response.body()
                     if (data != null) {
                         EspressoIdlingResource.decrement()
-                        callback.onLoadMovieDetails(data)
+                        movie.value = ApiResponse.success(data)
                     }
                 }
             }
@@ -90,10 +93,12 @@ class RemoteDataSource private constructor(private val tmdbService: TmdbService)
             }
 
         })
+        return movie
     }
 
-    fun getTvShow(id: Int, callback: LoadTvShowDetailsCallback){
+    fun getTvShow(id: Int): MutableLiveData<ApiResponse<TvDetailResponse>>{
         EspressoIdlingResource.increment()
+        val tvShowDetailResponse = MutableLiveData<ApiResponse<TvDetailResponse>>()
         tmdbService.getTvShowApiService().getTvShow(id, API_KEY).enqueue(object : Callback<TvDetailResponse> {
             override fun onResponse(
                 call: Call<TvDetailResponse>,
@@ -103,7 +108,7 @@ class RemoteDataSource private constructor(private val tmdbService: TmdbService)
                     val data = response.body()
                     if (data != null) {
                         EspressoIdlingResource.decrement()
-                        callback.onLoadTvShowDetails(data)
+                        tvShowDetailResponse.value = ApiResponse.success(data)
                     }
                 }
             }
@@ -113,21 +118,6 @@ class RemoteDataSource private constructor(private val tmdbService: TmdbService)
             }
 
         })
-    }
-
-    interface LoadMoviesCallback {
-        fun onLoadMovies(movieResponse: MovieResponse)
-    }
-
-    interface LoadTvShowCallback {
-        fun onLoadTvShows(tvResponse: TvResponse)
-    }
-
-    interface LoadMovieDetailsCallback {
-        fun onLoadMovieDetails(movieDetailResponse: MovieDetailResponse)
-    }
-
-    interface LoadTvShowDetailsCallback {
-        fun onLoadTvShowDetails(tvShowDetailResponse: TvDetailResponse)
+        return tvShowDetailResponse
     }
 }

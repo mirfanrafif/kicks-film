@@ -8,6 +8,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_height="230dp"
+        style="@style/MyAppBar"
         android:layout_width="match_parent">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -44,6 +45,12 @@
         <include layout="@layout/content_detail" android:id="@+id/content_detail"/>
 
     </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/detailLoading"
+        android:layout_gravity="center"/>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

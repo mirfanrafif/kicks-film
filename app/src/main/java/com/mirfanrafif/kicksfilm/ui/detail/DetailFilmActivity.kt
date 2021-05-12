@@ -1,13 +1,20 @@
 package com.mirfanrafif.kicksfilm.ui.detail
 
+import android.graphics.Color
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.mirfanrafif.kicksfilm.R
 import com.mirfanrafif.kicksfilm.data.entities.MovieEntity
+import com.mirfanrafif.kicksfilm.data.entities.TvShowEntity
 import com.mirfanrafif.kicksfilm.databinding.ActivityDetailFilmBinding
 import com.mirfanrafif.kicksfilm.viewmodel.ViewModelFactory
+import com.mirfanrafif.kicksfilm.vo.Status
 
 class DetailFilmActivity : AppCompatActivity() {
 
@@ -23,24 +30,83 @@ class DetailFilmActivity : AppCompatActivity() {
         binding = ActivityDetailFilmBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+            binding.toolbar.setTitleTextColor(getColor(R.color.white))
+        }else{
+            binding.toolbar.setTitleTextColor(Color.parseColor("#ffffffff"))
+        }
+
+        setSupportActionBar(binding.toolbar)
+
         val id = intent.getIntExtra(EXTRA_ID, 0)
         val type = intent.getStringExtra(EXTRA_TYPE)
 
-        val factory = ViewModelFactory.getInstance()
+        val factory = ViewModelFactory.getInstance(this)
         val viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
-        if (type != null) {
-            viewModel.getDetailMovie(id, type).observe(this, { movie ->
-                Glide.with(this@DetailFilmActivity).load(movie.photo).into(binding.imgDetail)
-                setSupportActionBar(binding.toolbar)
-                val rating = movie.rating.times(10).toInt()
-                supportActionBar?.title = movie.title
-                binding.contentDetail.textTahun.text = movie.year.toString()
-                binding.contentDetail.textCategory.text = movie.category
-                binding.contentDetail.textDescription.text = movie.overview
-                binding.contentDetail.rating.max = 100
-                binding.contentDetail.rating.progress = movie.rating.times(10).toInt()
-                binding.contentDetail.textRating.text = getString(R.string.rating, rating)
-            })
+        when(type) {
+            "movie" -> {
+                viewModel.getDetailMovie(id).observe(this, { result ->
+                    if (result != null) {
+                        when(result.status) {
+                            Status.LOADING -> binding.detailLoading.visibility = View.VISIBLE
+                            Status.SUCCESS -> {
+                                binding.detailLoading.visibility = View.GONE
+                                setData(result.data)
+                            }
+                            Status.ERROR -> {
+                                binding.detailLoading.visibility = View.GONE
+                                Toast.makeText(this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                })
+            }
+            "tvshow" -> {
+                viewModel.getTvShow(id).observe(this, { result ->
+                    if (result != null) {
+                        when(result.status) {
+                            Status.LOADING -> binding.detailLoading.visibility = View.VISIBLE
+                            Status.SUCCESS -> {
+                                binding.detailLoading.visibility = View.GONE
+                                setData(result.data)
+                            }
+                            Status.ERROR -> {
+                                binding.detailLoading.visibility = View.GONE
+                                Toast.makeText(this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                })
+            }
+            else -> Log.e("DetailFilmActivity", "Unknown data type")
+        }
+    }
+
+    private fun <T> setData(data: T) {
+        when(data) {
+           is MovieEntity -> {
+               Glide.with(this@DetailFilmActivity).load(data.photo).into(binding.imgDetail)
+               val rating = data.rating.times(10).toInt()
+               supportActionBar?.title = data.title
+               binding.contentDetail.textTahun.text = data.year.toString()
+               binding.contentDetail.textCategory.text = data.category
+               binding.contentDetail.textDescription.text = data.overview
+               binding.contentDetail.ratingBar.max = 100
+               binding.contentDetail.ratingBar.progress = data.rating.times(10).toInt()
+               binding.contentDetail.textRating.text = getString(R.string.rating, rating)
+           }
+           is TvShowEntity -> {
+               Glide.with(this@DetailFilmActivity).load(data.photo).into(binding.imgDetail)
+               val rating = data.rating.times(10).toInt()
+               supportActionBar?.title = data.title
+               binding.contentDetail.textTahun.text = data.year.toString()
+               binding.contentDetail.textCategory.text = data.category
+               binding.contentDetail.textDescription.text = data.overview
+               binding.contentDetail.ratingBar.max = 100
+               binding.contentDetail.ratingBar.progress = data.rating.times(10).toInt()
+               binding.contentDetail.textRating.text = getString(R.string.rating, rating)
+           }
+           else -> Log.e("DetailFilmActivity", "Unknown data type")
         }
     }
 }
