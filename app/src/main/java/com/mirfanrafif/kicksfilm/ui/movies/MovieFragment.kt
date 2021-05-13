@@ -31,7 +31,7 @@ class MovieFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
-            val layoutManager = GridLayoutManager(context, 2)
+            val layoutManager = GridLayoutManager(context, 3)
             val adapter = MoviesAdapter()
             binding.rvMovies.adapter = adapter
             binding.rvMovies.layoutManager = layoutManager

@@ -34,5 +34,5 @@ data class TvShowEntity (
     var photo: String,
 
     @ColumnInfo(name = "isFavorite")
-    var isFavorite: Boolean? = false
+    var isFavorite: Boolean = false
 ): Parcelable

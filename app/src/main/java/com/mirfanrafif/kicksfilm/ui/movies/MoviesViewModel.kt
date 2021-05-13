@@ -8,5 +8,6 @@ import com.mirfanrafif.kicksfilm.data.entities.MovieEntity
 import com.mirfanrafif.kicksfilm.vo.Resource
 
 class MoviesViewModel(private val movieRepository: MovieRepository): ViewModel() {
+
     fun getAllMovies(): LiveData<Resource<List<MovieEntity>>> = movieRepository.getAllMovies()
 }

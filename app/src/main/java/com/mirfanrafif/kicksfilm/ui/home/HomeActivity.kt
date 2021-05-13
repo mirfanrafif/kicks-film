@@ -1,10 +1,14 @@
 package com.mirfanrafif.kicksfilm.ui.home
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mirfanrafif.kicksfilm.R
 import com.mirfanrafif.kicksfilm.databinding.ActivityHomeBinding
+import com.mirfanrafif.kicksfilm.ui.favorite.FavoriteActivity
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -23,7 +27,20 @@ class HomeActivity : AppCompatActivity() {
         TabLayoutMediator(binding.tabs, binding.viewpager) {tabs, position ->
             tabs.text = tabName[position]
         }.attach()
+    }
 
-//        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[HomeViewModel::class.java]
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.favoriteMenu -> {
+                startActivity(Intent(this, FavoriteActivity::class.java))
+            }
+        }
+        return true
     }
 }

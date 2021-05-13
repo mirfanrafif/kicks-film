@@ -32,7 +32,7 @@ class TvShowFragment : Fragment() {
             val factory = ViewModelFactory.getInstance(requireContext())
             val viewModel = ViewModelProvider(requireActivity(), factory)[TvShowViewModel::class.java]
             val adapter = TvShowAdapter()
-            val layoutManager = GridLayoutManager(context, 2)
+            val layoutManager = GridLayoutManager(context, 3)
 
             binding.rvTvShows.adapter = adapter
             binding.rvTvShows.layoutManager = layoutManager

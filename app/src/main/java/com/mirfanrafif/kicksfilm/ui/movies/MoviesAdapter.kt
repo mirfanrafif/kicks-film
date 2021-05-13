@@ -23,7 +23,7 @@ class MoviesAdapter: RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
     class MoviesViewHolder(private val binding: ItemMoviesBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(movieEntity: MovieEntity) {
             with(binding) {
-                namaFilm.text = movieEntity.title
+                namaFilm.text = if (movieEntity.title.length > 20) "${movieEntity.title.take(20)}..." else movieEntity.title
                 tahunFilm.text = movieEntity.year.toString()
                 Glide.with(itemView).load(movieEntity.photo).placeholder(R.drawable.ic_baseline_broken_image_24).into(imgThumbnail)
                 itemView.setOnClickListener {

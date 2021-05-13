@@ -101,7 +101,7 @@ class MovieRepository private constructor(
             }
 
             override fun shouldFetch(data: MovieEntity?): Boolean {
-                return data == null
+                return data?.category == null
             }
 
             override fun createCall(): LiveData<ApiResponse<MovieDetailResponse>> {
@@ -132,7 +132,7 @@ class MovieRepository private constructor(
             }
 
             override fun shouldFetch(data: TvShowEntity?): Boolean {
-                return data == null
+                return data?.category == null
             }
 
             override fun createCall(): LiveData<ApiResponse<TvDetailResponse>> {
@@ -155,4 +155,21 @@ class MovieRepository private constructor(
 
         }.asLiveData()
     }
+
+    override fun updateMovie(movieEntity: MovieEntity) {
+        appExecutor.diskIO().execute { localDataSource.updateMovie(movieEntity) }
+    }
+
+    override fun updateTvShow(tvShowEntity: TvShowEntity) {
+        appExecutor.diskIO().execute { localDataSource.updateTvShow(tvShowEntity) }
+    }
+
+    override fun getFavoriteMovies(): LiveData<List<MovieEntity>> {
+        return localDataSource.getFavoriteMovies()
+    }
+
+    override fun getFavoriteTvShows(): LiveData<List<TvShowEntity>> {
+        return localDataSource.getFavoriteTvShow()
+    }
+
 }

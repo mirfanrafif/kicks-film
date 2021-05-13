@@ -24,6 +24,7 @@ class DetailFilmActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityDetailFilmBinding
+    private lateinit var viewModel: DetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +43,11 @@ class DetailFilmActivity : AppCompatActivity() {
         val type = intent.getStringExtra(EXTRA_TYPE)
 
         val factory = ViewModelFactory.getInstance(this)
-        val viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
+        viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
+        getData(type, id)
+    }
+
+    private fun getData(type: String?, id: Int) {
         when(type) {
             "movie" -> {
                 viewModel.getDetailMovie(id).observe(this, { result ->
@@ -51,7 +56,7 @@ class DetailFilmActivity : AppCompatActivity() {
                             Status.LOADING -> binding.detailLoading.visibility = View.VISIBLE
                             Status.SUCCESS -> {
                                 binding.detailLoading.visibility = View.GONE
-                                setData(result.data)
+                                bindDataToView(result.data)
                             }
                             Status.ERROR -> {
                                 binding.detailLoading.visibility = View.GONE
@@ -68,7 +73,7 @@ class DetailFilmActivity : AppCompatActivity() {
                             Status.LOADING -> binding.detailLoading.visibility = View.VISIBLE
                             Status.SUCCESS -> {
                                 binding.detailLoading.visibility = View.GONE
-                                setData(result.data)
+                                bindDataToView(result.data)
                             }
                             Status.ERROR -> {
                                 binding.detailLoading.visibility = View.GONE
@@ -82,7 +87,7 @@ class DetailFilmActivity : AppCompatActivity() {
         }
     }
 
-    private fun <T> setData(data: T) {
+    private fun <T> bindDataToView(data: T) {
         when(data) {
            is MovieEntity -> {
                Glide.with(this@DetailFilmActivity).load(data.photo).into(binding.imgDetail)
@@ -94,6 +99,14 @@ class DetailFilmActivity : AppCompatActivity() {
                binding.contentDetail.ratingBar.max = 100
                binding.contentDetail.ratingBar.progress = data.rating.times(10).toInt()
                binding.contentDetail.textRating.text = getString(R.string.rating, rating)
+               binding.favoriteFab.setImageResource(
+                   if(data.isFavorite) R.drawable.ic_baseline_favorite_24
+                   else R.drawable.ic_baseline_favorite_border_24
+               )
+               binding.favoriteFab.setOnClickListener {
+                   data.isFavorite = !data.isFavorite
+                   viewModel.updateMovie(data)
+               }
            }
            is TvShowEntity -> {
                Glide.with(this@DetailFilmActivity).load(data.photo).into(binding.imgDetail)
@@ -105,6 +118,14 @@ class DetailFilmActivity : AppCompatActivity() {
                binding.contentDetail.ratingBar.max = 100
                binding.contentDetail.ratingBar.progress = data.rating.times(10).toInt()
                binding.contentDetail.textRating.text = getString(R.string.rating, rating)
+               binding.favoriteFab.setImageResource(
+                   if(data.isFavorite) R.drawable.ic_baseline_favorite_24
+                   else R.drawable.ic_baseline_favorite_border_24
+               )
+               binding.favoriteFab.setOnClickListener {
+                   data.isFavorite = !data.isFavorite
+                   viewModel.updateTvShow(data)
+               }
            }
            else -> Log.e("DetailFilmActivity", "Unknown data type")
         }
