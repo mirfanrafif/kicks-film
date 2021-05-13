@@ -3,20 +3,27 @@ package com.mirfanrafif.kicksfilm.ui.tvshow
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mirfanrafif.kicksfilm.R
+import com.mirfanrafif.kicksfilm.data.entities.MovieEntity
 import com.mirfanrafif.kicksfilm.data.entities.TvShowEntity
 import com.mirfanrafif.kicksfilm.databinding.ItemMoviesBinding
 import com.mirfanrafif.kicksfilm.ui.detail.DetailFilmActivity
 
-class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>()  {
-    private val movies = ArrayList<TvShowEntity>()
+class TvShowAdapter: PagedListAdapter<TvShowEntity, TvShowAdapter.TvShowViewHolder>(DIFF_CALLBACK)  {
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TvShowEntity>() {
+            override fun areItemsTheSame(oldItem: TvShowEntity, newItem: TvShowEntity): Boolean {
+                return oldItem.id == newItem.id
+            }
 
-    fun setData(data: List<TvShowEntity>) {
-        movies.clear()
-        movies.addAll(data)
-        notifyDataSetChanged()
+            override fun areContentsTheSame(oldItem: TvShowEntity, newItem: TvShowEntity): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 
     class TvShowViewHolder(private val binding: ItemMoviesBinding) : RecyclerView.ViewHolder(binding.root){
@@ -41,8 +48,9 @@ class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>()  {
     }
 
     override fun onBindViewHolder(holder: TvShowViewHolder, position: Int) {
-        holder.bind(movies[position])
+        val tvShow = getItem(position)
+        if (tvShow != null) {
+            holder.bind(tvShow)
+        }
     }
-
-    override fun getItemCount(): Int = movies.size
 }

@@ -1,14 +1,15 @@
 package com.mirfanrafif.kicksfilm.data
 
 import androidx.lifecycle.LiveData
+import androidx.paging.PagedList
 import com.mirfanrafif.kicksfilm.data.entities.MovieEntity
 import com.mirfanrafif.kicksfilm.data.entities.TvShowEntity
 import com.mirfanrafif.kicksfilm.vo.Resource
 
-interface MovieDataSource {
-    fun getAllMovies(): LiveData<Resource<List<MovieEntity>>>
+interface IMovieRepository {
+    fun getAllMovies(): LiveData<Resource<PagedList<MovieEntity>>>
 
-    fun getAllTvShows(): LiveData<Resource<List<TvShowEntity>>>
+    fun getAllTvShows(): LiveData<Resource<PagedList<TvShowEntity>>>
 
     fun getDetailMovie(id: Int): LiveData<Resource<MovieEntity>>
 
@@ -18,7 +19,7 @@ interface MovieDataSource {
 
     fun updateTvShow(tvShowEntity: TvShowEntity)
 
-    fun getFavoriteMovies(): LiveData<List<MovieEntity>>
+    fun getFavoriteMovies(): LiveData<PagedList<MovieEntity>>
 
-    fun getFavoriteTvShows(): LiveData<List<TvShowEntity>>
+    fun getFavoriteTvShows(): LiveData<PagedList<TvShowEntity>>
 }

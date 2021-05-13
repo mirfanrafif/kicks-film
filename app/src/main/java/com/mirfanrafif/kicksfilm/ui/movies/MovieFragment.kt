@@ -43,7 +43,7 @@ class MovieFragment : Fragment() {
                     when(it.status) {
                         Status.LOADING -> binding.movieLoading.visibility = View.VISIBLE
                         Status.SUCCESS -> {
-                            adapter.setData(it.data as List<MovieEntity>)
+                            adapter.submitList(it.data)
                             binding.movieLoading.visibility = View.GONE
                         }
                         Status.ERROR -> {

@@ -3,6 +3,8 @@ package com.mirfanrafif.kicksfilm.ui.favorite
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mirfanrafif.kicksfilm.R
@@ -11,13 +13,19 @@ import com.mirfanrafif.kicksfilm.data.entities.TvShowEntity
 import com.mirfanrafif.kicksfilm.databinding.FavoriteItemBinding
 import com.mirfanrafif.kicksfilm.ui.detail.DetailFilmActivity
 
-class FavoriteTvShowAdapter: RecyclerView.Adapter<FavoriteTvShowAdapter.FavoriteTvViewHolder>() {
-    private val favoriteMoviesList = ArrayList<TvShowEntity>()
+class FavoriteTvShowAdapter: PagedListAdapter<TvShowEntity, FavoriteTvShowAdapter.FavoriteTvViewHolder>(
+    DIFF_CALLBACK) {
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TvShowEntity>() {
+            override fun areItemsTheSame(oldItem: TvShowEntity, newItem: TvShowEntity): Boolean {
+                return oldItem.id == newItem.id
+            }
 
-    fun setData(data: List<TvShowEntity>) {
-        favoriteMoviesList.clear()
-        favoriteMoviesList.addAll(data)
-        notifyDataSetChanged()
+            override fun areContentsTheSame(oldItem: TvShowEntity, newItem: TvShowEntity): Boolean {
+                return oldItem == newItem
+            }
+
+        }
     }
 
     inner class FavoriteTvViewHolder(private val binding: FavoriteItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -46,8 +54,9 @@ class FavoriteTvShowAdapter: RecyclerView.Adapter<FavoriteTvShowAdapter.Favorite
     }
 
     override fun onBindViewHolder(holder: FavoriteTvShowAdapter.FavoriteTvViewHolder, position: Int) {
-        holder.bind(favoriteMoviesList[position])
+        val tvShow = getItem(position)
+        if (tvShow != null) {
+            holder.bind(tvShow)
+        }
     }
-
-    override fun getItemCount(): Int = favoriteMoviesList.size
 }

@@ -41,7 +41,7 @@ class TvShowFragment : Fragment() {
                     when(it.status) {
                         Status.LOADING -> binding.tvShowLoading.visibility = View.VISIBLE
                         Status.SUCCESS -> {
-                            adapter.setData(it.data as List<TvShowEntity>)
+                            adapter.submitList(it.data)
                             binding.tvShowLoading.visibility = View.GONE
                         }
                         Status.ERROR -> {

@@ -33,11 +33,11 @@ class FavoriteActivity : AppCompatActivity() {
         binding.rvFavoriteTv.layoutManager = layoutManager2
 
         viewModel.getFavoriteMovies().observe(this, {
-            movieAdapter.setData(it)
+            movieAdapter.submitList(it)
         })
 
         viewModel.getFavoriteTvShows().observe(this, {
-            tvAdapter.setData(it)
+            tvAdapter.submitList(it)
         })
     }
 }
