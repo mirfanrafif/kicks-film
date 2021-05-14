@@ -1,6 +1,7 @@
 package com.mirfanrafif.kicksfilm.data
 
 import com.mirfanrafif.kicksfilm.data.entities.MovieEntity
+import com.mirfanrafif.kicksfilm.data.entities.TvShowEntity
 
 object FilmData {
     private val movies = arrayListOf(
@@ -10,12 +11,12 @@ object FilmData {
     )
 
     private val tvSeries = arrayListOf(
-        MovieEntity(id = 95557, title = "Invincible", year = 2021,
+        TvShowEntity(id = 95557, title = "Invincible", year = 2021,
             overview =  "Mark Grayson is a normal teenager except for the fact that his father is the most powerful superhero on the planet. Shortly after his seventeenth birthday, Mark begins to develop powers of his own and enters into his father’s tutelage.",
             rating =  8.9,  category = "Sci-Fi & Fantasy, Action & Adventure, Drama, War & Politics", "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/6UH52Fmau8RPsMAbQbjwN3wJSCj.jpg"),
     )
 
     fun getMovies(): List<MovieEntity> = movies
 
-    fun getTVShows(): List<MovieEntity> = tvSeries
+    fun getTVShows(): List<TvShowEntity> = tvSeries
 }

@@ -1,7 +1,7 @@
 package com.mirfanrafif.kicksfilm.di
 
 import android.content.Context
-import com.mirfanrafif.kicksfilm.data.MovieRepository
+import com.mirfanrafif.kicksfilm.data.repository.MovieRepository
 import com.mirfanrafif.kicksfilm.data.source.local.LocalDataSource
 import com.mirfanrafif.kicksfilm.data.source.local.database.KicksFilmDB
 import com.mirfanrafif.kicksfilm.data.source.remote.RemoteDataSource

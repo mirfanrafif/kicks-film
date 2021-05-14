@@ -1,8 +1,9 @@
-package com.mirfanrafif.kicksfilm.data
+package com.mirfanrafif.kicksfilm.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.mirfanrafif.kicksfilm.data.NetworkBoundResource
 import com.mirfanrafif.kicksfilm.data.entities.MovieEntity
 import com.mirfanrafif.kicksfilm.data.entities.TvShowEntity
 import com.mirfanrafif.kicksfilm.data.source.local.LocalDataSource
@@ -16,7 +17,7 @@ class MovieRepository private constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
     private val appExecutor: AppExecutor
-    ) : IMovieRepository{
+    ) : IMovieRepository {
     companion object {
         @Volatile
         private var instance: MovieRepository? = null
@@ -74,7 +75,7 @@ class MovieRepository private constructor(
                     .setInitialLoadSizeHint(6)
                     .setPageSize(3)
                     .build()
-                return LivePagedListBuilder(localDataSource.geAlltTvShow(), config).build()
+                return LivePagedListBuilder(localDataSource.getAllTvShow(), config).build()
             }
 
             override fun shouldFetch(data: PagedList<TvShowEntity>?): Boolean {
@@ -110,7 +111,7 @@ class MovieRepository private constructor(
             }
 
             override fun shouldFetch(data: MovieEntity?): Boolean {
-                return data?.category == null
+                return data == null
             }
 
             override fun createCall(): LiveData<ApiResponse<MovieDetailResponse>> {
@@ -141,7 +142,7 @@ class MovieRepository private constructor(
             }
 
             override fun shouldFetch(data: TvShowEntity?): Boolean {
-                return data?.category == null
+                return data == null
             }
 
             override fun createCall(): LiveData<ApiResponse<TvDetailResponse>> {

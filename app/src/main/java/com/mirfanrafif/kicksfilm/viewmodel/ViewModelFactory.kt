@@ -3,7 +3,7 @@ package com.mirfanrafif.kicksfilm.viewmodel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.mirfanrafif.kicksfilm.data.MovieRepository
+import com.mirfanrafif.kicksfilm.data.repository.MovieRepository
 import com.mirfanrafif.kicksfilm.di.Injection
 import com.mirfanrafif.kicksfilm.ui.detail.DetailViewModel
 import com.mirfanrafif.kicksfilm.ui.favorite.FavoriteViewModel

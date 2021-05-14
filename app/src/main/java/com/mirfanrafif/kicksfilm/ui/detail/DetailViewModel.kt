@@ -1,9 +1,8 @@
 package com.mirfanrafif.kicksfilm.ui.detail
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.mirfanrafif.kicksfilm.data.MovieRepository
+import com.mirfanrafif.kicksfilm.data.repository.MovieRepository
 import com.mirfanrafif.kicksfilm.data.entities.MovieEntity
 import com.mirfanrafif.kicksfilm.data.entities.TvShowEntity
 import com.mirfanrafif.kicksfilm.vo.Resource

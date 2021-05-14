@@ -4,22 +4,20 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.mirfanrafif.kicksfilm.data.FilmData
-import com.mirfanrafif.kicksfilm.data.MovieRepository
 import com.mirfanrafif.kicksfilm.data.entities.MovieEntity
+import com.mirfanrafif.kicksfilm.data.entities.TvShowEntity
+import com.mirfanrafif.kicksfilm.data.repository.MovieRepository
+import com.mirfanrafif.kicksfilm.vo.Resource
 import com.nhaarman.mockitokotlin2.verify
-import org.junit.Before
 import org.junit.Test
 
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Rule
-import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(MockitoJUnitRunner::class)
 class DetailViewModelTest {
-
     private lateinit var viewModel: DetailViewModel
 
     @get:Rule
@@ -29,7 +27,8 @@ class DetailViewModelTest {
     private lateinit var movieRepository: MovieRepository
 
     @Mock
-    private lateinit var observer: Observer<MovieEntity>
+    lateinit var movieObserver: Observer<Resource<MovieEntity>>
+    lateinit var tvObserver: Observer<Resource<TvShowEntity>>
 
     @Before
     fun setUp() {
@@ -38,18 +37,47 @@ class DetailViewModelTest {
 
     @Test
     fun getDetailMovie() {
-        val dummyMovies = FilmData.getMovies()
-        val movie = MutableLiveData<MovieEntity>()
-        val id = dummyMovies[0].id
-        movie.value = dummyMovies[0]
-        Mockito.`when`(movieRepository.getDetailMovie(id)).thenReturn(movie)
+        val movie = FilmData.getMovies()[0]
+        val dummyMovies = Resource.success(movie)
+        val movieList = MutableLiveData<Resource<MovieEntity>>()
+        movieList.value = dummyMovies
+        Mockito.`when`(movieRepository.getDetailMovie(movie.id)).thenReturn(movieList)
 
-        val movieEntity = viewModel.getDetailMovie(id, "movie").value
-        verify(movieRepository).getDetailMovie(id)
-        assertNotNull(movieEntity)
+        val movies = viewModel.getDetailMovie(movie.id).value
+        verify(movieRepository).getDetailMovie(movie.id)
+        assertNotNull(movies)
 
-        viewModel.getDetailMovie(id, "movie").observeForever(observer)
-        verify(observer).onChanged(dummyMovies[0])
+        viewModel.getDetailMovie(movie.id).observeForever(movieObserver)
+        verify(movieObserver).onChanged(movies)
+    }
 
+    @Test
+    fun getTvShow() {
+        val dummyMovie = FilmData.getTVShows()[0]
+        val movieResource = Resource.success(dummyMovie)
+        val movieList = MutableLiveData<Resource<TvShowEntity>>()
+        movieList.value = movieResource
+        Mockito.`when`(movieRepository.getDetailTvShow(dummyMovie.id)).thenReturn(movieList)
+
+        val expectedMovie = viewModel.getTvShow(dummyMovie.id).value
+        verify(movieRepository).getDetailTvShow(dummyMovie.id)
+        assertNotNull(expectedMovie)
+
+        viewModel.getTvShow(dummyMovie.id).observeForever(tvObserver)
+        verify(tvObserver).onChanged(expectedMovie)
+    }
+
+    @Test
+    fun updateMovie() {
+        val dummyMovie = FilmData.getMovies()[0]
+        viewModel.updateMovie(dummyMovie)
+        verify(viewModel).updateMovie(dummyMovie)
+    }
+
+    @Test
+    fun updateTvShow() {
+        val dummyTvShow = FilmData.getTVShows()[0]
+        viewModel.updateTvShow(dummyTvShow)
+        verify(viewModel).updateTvShow(dummyTvShow)
     }
 }

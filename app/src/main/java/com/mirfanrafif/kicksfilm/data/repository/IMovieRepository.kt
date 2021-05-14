@@ -1,4 +1,4 @@
-package com.mirfanrafif.kicksfilm.data
+package com.mirfanrafif.kicksfilm.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList

@@ -31,7 +31,7 @@ class LocalDataSource private constructor(
 
     fun deleteMovie(movieEntity: MovieEntity) = movieDao.delete(movieEntity)
 
-    fun geAlltTvShow() : DataSource.Factory<Int, TvShowEntity> = tvShowDao.getAllTvShow()
+    fun getAllTvShow() : DataSource.Factory<Int, TvShowEntity> = tvShowDao.getAllTvShow()
 
     fun getFavoriteTvShow(): DataSource.Factory<Int, TvShowEntity> = tvShowDao.getFavoriteMovie()
 
