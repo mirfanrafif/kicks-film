@@ -12,30 +12,32 @@ import com.mirfanrafif.kicksfilm.utils.AppExecutor
 import com.mirfanrafif.kicksfilm.utils.LiveDataTestUtil
 import com.mirfanrafif.kicksfilm.utils.PagedListUtil
 import com.mirfanrafif.kicksfilm.vo.Resource
-import com.nhaarman.mockitokotlin2.verify
 
 import org.junit.Test
 
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Rule
 import org.junit.runner.RunWith
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.mock
+import org.mockito.Mock
+import org.mockito.Mockito
+import org.mockito.Mockito.*
 import org.mockito.junit.MockitoJUnitRunner
+import java.util.logging.Logger
 
 @RunWith(MockitoJUnitRunner::class)
+@Suppress("UNCHECKED_CAST")
 class MovieRepositoryTest {
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private val remote = mock(RemoteDataSource::class.java)
-    private val local = mock(LocalDataSource::class.java)
+    private var local = mock(LocalDataSource::class.java)
     private val appExecutors = mock(AppExecutor::class.java)
 
     private val movieResponses = FilmData.getMovies()
     private val selectedMovie = movieResponses[0]
-
     private val movieRepository = FakeMovieRepository(local, remote, appExecutors)
 
     @Test
@@ -87,5 +89,22 @@ class MovieRepositoryTest {
         movieRepository.getFavoriteTvShows()
 
         verify(local).getFavoriteTvShow()
+    }
+
+    @Test
+    fun updateMovie() {
+
+        val movie = selectedMovie
+        movie.isFavorite = true
+
+        doNothing().`when`(local).updateMovie(movie)
+    }
+
+    @Test
+    fun updateTvShow() {
+        val tvShowEntity = FilmData.getTVShows()[0]
+        tvShowEntity.isFavorite = true
+
+        doNothing().`when`(local).updateTvShow(tvShowEntity)
     }
 }

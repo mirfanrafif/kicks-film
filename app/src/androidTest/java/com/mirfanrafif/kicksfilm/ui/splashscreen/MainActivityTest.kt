@@ -3,6 +3,7 @@ package com.mirfanrafif.kicksfilm.ui.splashscreen
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -19,12 +20,11 @@ import org.junit.Test
 
 class MainActivityTest {
 
-    private val dummyMovies = FilmData.getMovies()
-    private val dummyTvShows = FilmData.getTVShows()
+    @Rule
+    var rule: ActivityScenarioRule<MainActivity> = ActivityScenarioRule(MainActivity::class.java)
 
     @Before
     fun setUp() {
-        ActivityScenario.launch(MainActivity::class.java)
         IdlingRegistry.getInstance().register(EspressoIdlingResource.idlingResource)
     }
 
@@ -40,13 +40,10 @@ class MainActivityTest {
 
     @Test
     fun loadDetailMovie() {
-        val movie = dummyMovies[0]
         onView(withId(R.id.rv_movies)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(1, click()))
         onView(withId(R.id.text_description)).check(matches(isDisplayed()))
-        onView(withId(R.id.text_description)).check(matches(withText(movie.overview)))
         onView(withId(R.id.text_tahun)).check(matches(isDisplayed()))
-        onView(withId(R.id.text_tahun)).check(matches(withText(movie.year.toString())))
     }
 
     @Test
@@ -58,14 +55,40 @@ class MainActivityTest {
 
     @Test
     fun loadDetailTvShow() {
-        val movie = dummyTvShows[0]
         onView(withId(R.id.tabs)).check(matches(isDisplayed()))
         onView(withText("TV SHOW")).perform(click())
         onView(withId(R.id.rv_tv_shows)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_tv_shows)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
         onView(withId(R.id.text_description)).check(matches(isDisplayed()))
-        onView(withId(R.id.text_description)).check(matches(withText(movie.overview)))
         onView(withId(R.id.text_tahun)).check(matches(isDisplayed()))
-        onView(withId(R.id.text_tahun)).check(matches(withText(movie.year.toString())))
     }
+
+    @Test
+    fun loadFavorites() {
+        onView(withId(R.id.favoriteMenu)).perform(click())
+        onView(withId(R.id.tv_favorite_movies_label)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_favorite_tv_label)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun setMovieAsFavorite() {
+        onView(withId(R.id.rv_movies)).check(matches(isDisplayed()))
+        onView(withId(R.id.rv_movies)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(1, click()))
+        onView(withId(R.id.text_description)).check(matches(isDisplayed()))
+        onView(withId(R.id.text_tahun)).check(matches(isDisplayed()))
+        onView(withId(R.id.favoriteFab)).perform(click())
+    }
+
+    @Test
+    fun setTvShowAsFavorite() {
+        onView(withId(R.id.tabs)).check(matches(isDisplayed()))
+        onView(withText("TV SHOW")).perform(click())
+        onView(withId(R.id.rv_tv_shows)).check(matches(isDisplayed()))
+        onView(withId(R.id.rv_tv_shows)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
+        onView(withId(R.id.text_description)).check(matches(isDisplayed()))
+        onView(withId(R.id.text_tahun)).check(matches(isDisplayed()))
+        onView(withId(R.id.favoriteFab)).perform(click())
+    }
+
+
 }

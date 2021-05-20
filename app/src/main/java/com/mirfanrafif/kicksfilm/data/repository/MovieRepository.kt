@@ -11,6 +11,7 @@ import com.mirfanrafif.kicksfilm.data.source.remote.ApiResponse
 import com.mirfanrafif.kicksfilm.data.source.remote.RemoteDataSource
 import com.mirfanrafif.kicksfilm.data.source.remote.responses.*
 import com.mirfanrafif.kicksfilm.utils.AppExecutor
+import com.mirfanrafif.kicksfilm.utils.EspressoIdlingResource
 import com.mirfanrafif.kicksfilm.vo.Resource
 
 class MovieRepository private constructor(
@@ -34,12 +35,13 @@ class MovieRepository private constructor(
     override fun getAllMovies(): LiveData<Resource<PagedList<MovieEntity>>> {
         return object : NetworkBoundResource<PagedList<MovieEntity>, List<MovieItem>>(appExecutor) {
             override fun loadFromDB(): LiveData<PagedList<MovieEntity>> {
+                val data = localDataSource.getAllMovies()
                 val config = PagedList.Config.Builder()
                     .setEnablePlaceholders(false)
                     .setInitialLoadSizeHint(6)
                     .setPageSize(3)
                     .build()
-                return LivePagedListBuilder(localDataSource.getAllMovies(), config).build()
+                return LivePagedListBuilder(data, config).build()
             }
 
             override fun shouldFetch(data: PagedList<MovieEntity>?): Boolean {

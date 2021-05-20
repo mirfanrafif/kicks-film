@@ -10,4 +10,8 @@
     </string-array>
     <string name="rating">%1$d/100</string>
     <string name="favorit">Favorit</string>
+    <string name="favorite_movies">Favorite Movies</string>
+    <string name="favorite_tv_shows">Favorite Tv Shows</string>
+    <string name="deskripsi">Deskripsi</string>
+    <string name="director">Director</string>
 </resources>
