@@ -1,10 +1,10 @@
 package com.mirfanrafif.kicksfilm.ui.favorite
 
 import androidx.lifecycle.ViewModel
-import com.mirfanrafif.kicksfilm.data.repository.MovieRepository
+import com.mirfanrafif.kicksfilm.domain.repository.MovieRepository
+import com.mirfanrafif.kicksfilm.domain.usecase.MovieUseCase
 
-class FavoriteViewModel(private val movieRepository: MovieRepository): ViewModel() {
+class FavoriteViewModel(private val movieUseCase: MovieUseCase): ViewModel() {
 
-    fun getFavoriteMovies() = movieRepository.getFavoriteMovies()
-    fun getFavoriteTvShows() = movieRepository.getFavoriteTvShows()
+    fun getFavoriteMovies() = movieUseCase.getFavoriteMovies()
 }

@@ -1,18 +1,28 @@
 package com.mirfanrafif.kicksfilm.data.source.remote.api
 
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 
 class TmdbService {
-    val retrofit = Retrofit.Builder()
-        .baseUrl("https://api.themoviedb.org/")
-        .addConverterFactory(GsonConverterFactory.create())
+    private fun getClient() = OkHttpClient.Builder()
+        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+        .connectTimeout(120, TimeUnit.SECONDS)
+        .readTimeout(120, TimeUnit.SECONDS)
         .build()
 
-    fun getMovieApiService(): MovieApiService = retrofit.create(MovieApiService::class.java)
+    private fun getRetrofit() = Retrofit.Builder()
+        .baseUrl("https://api.themoviedb.org/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .client(getClient())
+        .build()
 
-    fun getTvShowApiService(): TvShowApiService = retrofit.create(TvShowApiService::class.java)
+    fun getMovieApiService(): MovieApiService = getRetrofit().create(MovieApiService::class.java)
+
+    fun getTvShowApiService(): TvShowApiService = getRetrofit().create(TvShowApiService::class.java)
 
 
 }

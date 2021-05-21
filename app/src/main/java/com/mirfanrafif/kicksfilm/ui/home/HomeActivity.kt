@@ -9,6 +9,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.mirfanrafif.kicksfilm.R
 import com.mirfanrafif.kicksfilm.databinding.ActivityHomeBinding
 import com.mirfanrafif.kicksfilm.ui.favorite.FavoriteActivity
+import com.mirfanrafif.kicksfilm.ui.movies.MovieFragment
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -20,13 +21,9 @@ class HomeActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-        val tabName = resources.getStringArray(R.array.tab_name)
-
-        val sectionPagesAdapter = SectionPagesAdapter(this)
-        binding.viewpager.adapter = sectionPagesAdapter
-        TabLayoutMediator(binding.tabs, binding.viewpager) {tabs, position ->
-            tabs.text = tabName[position]
-        }.attach()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.wrapper, MovieFragment())
+            .commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

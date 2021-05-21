@@ -10,18 +10,19 @@ import com.bumptech.glide.Glide
 import com.mirfanrafif.kicksfilm.R
 import com.mirfanrafif.kicksfilm.data.entities.MovieEntity
 import com.mirfanrafif.kicksfilm.databinding.FavoriteItemBinding
+import com.mirfanrafif.kicksfilm.domain.model.Movie
 import com.mirfanrafif.kicksfilm.ui.detail.DetailFilmActivity
 
-class FavoriteMovieAdapter : PagedListAdapter<MovieEntity, FavoriteMovieAdapter.FavoriteMovieViewHolder>(
+class FavoriteMovieAdapter : PagedListAdapter<Movie, FavoriteMovieAdapter.FavoriteMovieViewHolder>(
     DIFF_CALLBACK) {
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MovieEntity>() {
-            override fun areItemsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {
+            override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
+            override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
                 return oldItem == newItem
             }
 
@@ -29,7 +30,7 @@ class FavoriteMovieAdapter : PagedListAdapter<MovieEntity, FavoriteMovieAdapter.
     }
 
     inner class FavoriteMovieViewHolder(private val binding: FavoriteItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(entity: MovieEntity) {
+        fun bind(entity: Movie) {
             with(binding) {
                 Glide.with(binding.root.context).load(entity.photo)
                     .placeholder(R.drawable.ic_baseline_broken_image_24).into(imgFavorite)
@@ -37,8 +38,7 @@ class FavoriteMovieAdapter : PagedListAdapter<MovieEntity, FavoriteMovieAdapter.
                 tvFavoriteYear.text = entity.year.toString()
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailFilmActivity::class.java)
-                    intent.putExtra(DetailFilmActivity.EXTRA_ID, entity.id)
-                    intent.putExtra(DetailFilmActivity.EXTRA_TYPE, "movie")
+                    intent.putExtra(DetailFilmActivity.EXTRA_MOVIE, entity)
                     itemView.context.startActivity(intent)
                 }
             }

@@ -3,11 +3,11 @@ package com.mirfanrafif.kicksfilm.ui.movies
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
-import com.mirfanrafif.kicksfilm.data.repository.MovieRepository
-import com.mirfanrafif.kicksfilm.data.entities.MovieEntity
-import com.mirfanrafif.kicksfilm.vo.Resource
+import com.mirfanrafif.kicksfilm.data.Resource
+import com.mirfanrafif.kicksfilm.domain.model.Movie
+import com.mirfanrafif.kicksfilm.domain.usecase.MovieUseCase
 
-class MoviesViewModel(private val movieRepository: MovieRepository): ViewModel() {
+class MoviesViewModel(private val movieUseCase: MovieUseCase): ViewModel() {
 
-    fun getAllMovies(): LiveData<Resource<PagedList<MovieEntity>>> = movieRepository.getAllMovies()
+    fun getAllMovies(): LiveData<Resource<PagedList<Movie>>> = movieUseCase.getAllMovies()
 }

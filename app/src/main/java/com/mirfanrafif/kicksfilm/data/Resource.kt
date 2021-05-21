@@ -1,4 +1,4 @@
-package com.mirfanrafif.kicksfilm.vo
+package com.mirfanrafif.kicksfilm.data
 
 data class Resource<T>(val status: Status, val data: T?, val message: String?) {
     companion object {

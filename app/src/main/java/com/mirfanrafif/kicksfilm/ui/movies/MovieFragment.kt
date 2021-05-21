@@ -6,13 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.mirfanrafif.kicksfilm.data.entities.MovieEntity
 import com.mirfanrafif.kicksfilm.databinding.FragmentMovieBinding
-import com.mirfanrafif.kicksfilm.viewmodel.ViewModelFactory
-import com.mirfanrafif.kicksfilm.vo.Status
+import com.mirfanrafif.kicksfilm.ui.viewmodel.ViewModelFactory
+import com.mirfanrafif.kicksfilm.data.Status
 
 class MovieFragment : Fragment() {
 

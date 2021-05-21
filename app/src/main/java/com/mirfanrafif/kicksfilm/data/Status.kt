@@ -1,4 +1,4 @@
-package com.mirfanrafif.kicksfilm.vo
+package com.mirfanrafif.kicksfilm.data
 
 enum class Status {
     SUCCESS,

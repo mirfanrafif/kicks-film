@@ -5,7 +5,6 @@ import androidx.lifecycle.MediatorLiveData
 import com.mirfanrafif.kicksfilm.data.source.remote.ApiResponse
 import com.mirfanrafif.kicksfilm.data.source.remote.StatusResponse
 import com.mirfanrafif.kicksfilm.utils.AppExecutor
-import com.mirfanrafif.kicksfilm.vo.Resource
 
 abstract class NetworkBoundResource<ResultType, RequestType>(private val mExecutors: AppExecutor) {
 

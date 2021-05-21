@@ -8,19 +8,19 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mirfanrafif.kicksfilm.R
-import com.mirfanrafif.kicksfilm.data.entities.MovieEntity
 import com.mirfanrafif.kicksfilm.databinding.ItemMoviesBinding
+import com.mirfanrafif.kicksfilm.domain.model.Movie
 import com.mirfanrafif.kicksfilm.ui.detail.DetailFilmActivity
 
-class MoviesAdapter: PagedListAdapter<MovieEntity, MoviesAdapter.MoviesViewHolder>(DIFF_CALLBACK) {
+class MoviesAdapter: PagedListAdapter<Movie, MoviesAdapter.MoviesViewHolder>(DIFF_CALLBACK) {
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MovieEntity>() {
-            override fun areItemsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {
+            override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
+            override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
                 return oldItem == newItem
             }
 
@@ -28,15 +28,14 @@ class MoviesAdapter: PagedListAdapter<MovieEntity, MoviesAdapter.MoviesViewHolde
     }
 
     class MoviesViewHolder(private val binding: ItemMoviesBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(movieEntity: MovieEntity) {
+        fun bind(movie: Movie) {
             with(binding) {
-                namaFilm.text = if (movieEntity.title.length > 20) "${movieEntity.title.take(20)}..." else movieEntity.title
-                tahunFilm.text = movieEntity.year.toString()
-                Glide.with(itemView).load(movieEntity.photo).placeholder(R.drawable.ic_baseline_broken_image_24).into(imgThumbnail)
+                namaFilm.text = if (movie.title.length > 20) "${movie.title.take(20)}..." else movie.title
+                tahunFilm.text = movie.year.toString()
+                Glide.with(itemView).load(movie.photo).placeholder(R.drawable.ic_baseline_broken_image_24).into(imgThumbnail)
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailFilmActivity::class.java)
-                    intent.putExtra(DetailFilmActivity.EXTRA_ID, movieEntity.id)
-                    intent.putExtra(DetailFilmActivity.EXTRA_TYPE, "movie")
+                    intent.putExtra(DetailFilmActivity.EXTRA_MOVIE, movie)
                     itemView.context.startActivity(intent)
                 }
             }

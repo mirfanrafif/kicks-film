@@ -5,15 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.mirfanrafif.kicksfilm.data.entities.MovieEntity
-import com.mirfanrafif.kicksfilm.data.entities.TvShowEntity
 import com.mirfanrafif.kicksfilm.data.source.local.dao.MovieDao
-import com.mirfanrafif.kicksfilm.data.source.local.dao.TvShowDao
 
-@Database(entities = [MovieEntity::class, TvShowEntity::class], version = 1)
+@Database(entities = [MovieEntity::class], version = 1)
 abstract class KicksFilmDB : RoomDatabase(){
     abstract fun movieDao(): MovieDao
-
-    abstract fun tvShowDao(): TvShowDao
 
     companion object {
         @Volatile

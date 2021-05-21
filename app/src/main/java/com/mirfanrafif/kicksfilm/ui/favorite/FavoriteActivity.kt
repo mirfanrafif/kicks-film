@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mirfanrafif.kicksfilm.R
 import com.mirfanrafif.kicksfilm.databinding.ActivityFavoriteBinding
-import com.mirfanrafif.kicksfilm.viewmodel.ViewModelFactory
+import com.mirfanrafif.kicksfilm.ui.viewmodel.ViewModelFactory
 
 class FavoriteActivity : AppCompatActivity() {
     private lateinit var viewModel: FavoriteViewModel
@@ -22,22 +22,12 @@ class FavoriteActivity : AppCompatActivity() {
 
         val movieAdapter = FavoriteMovieAdapter()
         val layoutManager = LinearLayoutManager(this)
-        val layoutManager2 = LinearLayoutManager(this)
-
-        val tvAdapter = FavoriteTvShowAdapter()
 
         binding.rvFavoriteMovies.adapter = movieAdapter
         binding.rvFavoriteMovies.layoutManager = layoutManager
 
-        binding.rvFavoriteTv.adapter = tvAdapter
-        binding.rvFavoriteTv.layoutManager = layoutManager2
-
         viewModel.getFavoriteMovies().observe(this, {
             movieAdapter.submitList(it)
-        })
-
-        viewModel.getFavoriteTvShows().observe(this, {
-            tvAdapter.submitList(it)
         })
     }
 }

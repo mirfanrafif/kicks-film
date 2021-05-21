@@ -1,20 +1,20 @@
 package com.mirfanrafif.kicksfilm.ui.detail
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.mirfanrafif.kicksfilm.data.repository.MovieRepository
-import com.mirfanrafif.kicksfilm.data.entities.MovieEntity
-import com.mirfanrafif.kicksfilm.data.entities.TvShowEntity
-import com.mirfanrafif.kicksfilm.vo.Resource
+import com.mirfanrafif.kicksfilm.domain.model.Movie
+import com.mirfanrafif.kicksfilm.domain.usecase.MovieUseCase
 
-class DetailViewModel(private val movieRepository: MovieRepository): ViewModel() {
+class DetailViewModel(private val movieUseCase: MovieUseCase): ViewModel() {
 
-    fun getDetailMovie(id: Int): LiveData<Resource<MovieEntity>> =
-        movieRepository.getDetailMovie(id)
+    private val movie = MutableLiveData<Movie>()
 
-    fun getTvShow(id: Int): LiveData<Resource<TvShowEntity>> = movieRepository.getDetailTvShow(id)
+    fun getMovie() : LiveData<Movie> = movie
 
-    fun updateMovie(entity: MovieEntity) = movieRepository.updateMovie(entity)
+    fun setMovie(input: Movie) {
+        movie.value = input
+    }
 
-    fun updateTvShow(entity: TvShowEntity) = movieRepository.updateTvShow(entity)
+    fun updateMovie(movie: Movie) = movieUseCase.updateMovie(movie)
 }
