@@ -22,7 +22,5 @@ class TmdbService {
 
     fun getMovieApiService(): MovieApiService = getRetrofit().create(MovieApiService::class.java)
 
-    fun getTvShowApiService(): TvShowApiService = getRetrofit().create(TvShowApiService::class.java)
-
 
 }

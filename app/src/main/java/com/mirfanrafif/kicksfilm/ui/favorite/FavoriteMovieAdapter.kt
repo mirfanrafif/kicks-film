@@ -3,30 +3,21 @@ package com.mirfanrafif.kicksfilm.ui.favorite
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mirfanrafif.kicksfilm.R
-import com.mirfanrafif.kicksfilm.data.entities.MovieEntity
 import com.mirfanrafif.kicksfilm.databinding.FavoriteItemBinding
 import com.mirfanrafif.kicksfilm.domain.model.Movie
 import com.mirfanrafif.kicksfilm.ui.detail.DetailFilmActivity
 
-class FavoriteMovieAdapter : PagedListAdapter<Movie, FavoriteMovieAdapter.FavoriteMovieViewHolder>(
-    DIFF_CALLBACK) {
+class FavoriteMovieAdapter : RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteMovieViewHolder>() {
 
-    companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {
-            override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-                return oldItem.id == newItem.id
-            }
+    private val movieList = ArrayList<Movie>()
 
-            override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-                return oldItem == newItem
-            }
-
-        }
+    fun setData(data: List<Movie>) {
+        movieList.clear()
+        movieList.addAll(data)
+        notifyDataSetChanged()
     }
 
     inner class FavoriteMovieViewHolder(private val binding: FavoriteItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -54,9 +45,11 @@ class FavoriteMovieAdapter : PagedListAdapter<Movie, FavoriteMovieAdapter.Favori
     }
 
     override fun onBindViewHolder(holder: FavoriteMovieAdapter.FavoriteMovieViewHolder, position: Int) {
-        val movie = getItem(position)
-        if (movie != null) {
-            holder.bind(movie)
-        }
+        val movie = movieList[position]
+        holder.bind(movie)
+    }
+
+    override fun getItemCount(): Int {
+        return movieList.size
     }
 }

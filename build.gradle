@@ -11,8 +11,8 @@ buildscript {
         androidCoreTestVersion = '2.1.0'
 
         logging_interceptor_version = "4.8.0"
-        roomVersion = '2.2.3'
-        roomRuntimeVersion = '2.2.5'
+        roomVersion = '2.3.0'
+        lifecycle_version = "2.3.1"
 
         pagingVersion = '2.1.1'
     }

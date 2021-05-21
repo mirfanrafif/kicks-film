@@ -1,16 +1,16 @@
 package com.mirfanrafif.kicksfilm.ui.movies
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.mirfanrafif.kicksfilm.data.Resource
 import com.mirfanrafif.kicksfilm.databinding.FragmentMovieBinding
 import com.mirfanrafif.kicksfilm.ui.viewmodel.ViewModelFactory
-import com.mirfanrafif.kicksfilm.data.Status
 
 class MovieFragment : Fragment() {
 
@@ -38,13 +38,13 @@ class MovieFragment : Fragment() {
             val viewModel = ViewModelProvider(requireActivity(), factory)[MoviesViewModel::class.java]
             viewModel.getAllMovies().observe(this, {
                 if (it != null) {
-                    when(it.status) {
-                        Status.LOADING -> binding.movieLoading.visibility = View.VISIBLE
-                        Status.SUCCESS -> {
-                            adapter.submitList(it.data)
+                    when(it) {
+                        is Resource.Loading -> binding.movieLoading.visibility = View.VISIBLE
+                        is Resource.Success -> {
+                            adapter.setData(it.data)
                             binding.movieLoading.visibility = View.GONE
                         }
-                        Status.ERROR -> {
+                        is Resource.Error -> {
                             binding.movieLoading.visibility = View.GONE
                             Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
                         }

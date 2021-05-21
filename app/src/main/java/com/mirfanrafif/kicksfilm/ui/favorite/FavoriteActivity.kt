@@ -1,10 +1,9 @@
 package com.mirfanrafif.kicksfilm.ui.favorite
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mirfanrafif.kicksfilm.R
 import com.mirfanrafif.kicksfilm.databinding.ActivityFavoriteBinding
 import com.mirfanrafif.kicksfilm.ui.viewmodel.ViewModelFactory
 
@@ -27,7 +26,7 @@ class FavoriteActivity : AppCompatActivity() {
         binding.rvFavoriteMovies.layoutManager = layoutManager
 
         viewModel.getFavoriteMovies().observe(this, {
-            movieAdapter.submitList(it)
+            movieAdapter.setData(it)
         })
     }
 }

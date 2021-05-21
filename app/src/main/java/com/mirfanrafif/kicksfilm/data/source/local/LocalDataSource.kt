@@ -1,9 +1,8 @@
 package com.mirfanrafif.kicksfilm.data.source.local
 
-import androidx.lifecycle.LiveData
-import androidx.paging.DataSource
-import com.mirfanrafif.kicksfilm.data.entities.MovieEntity
 import com.mirfanrafif.kicksfilm.data.source.local.dao.MovieDao
+import com.mirfanrafif.kicksfilm.data.source.local.entities.MovieEntity
+import kotlinx.coroutines.flow.Flow
 
 class LocalDataSource private constructor(
     private val movieDao: MovieDao){
@@ -17,13 +16,13 @@ class LocalDataSource private constructor(
         }
     }
 
-    fun getAllMovies() : DataSource.Factory<Int, MovieEntity> = movieDao.getAllMovies()
+    fun getAllMovies() : Flow<List<MovieEntity>> = movieDao.getAllMovies()
 
-    fun getFavoriteMovies(): DataSource.Factory<Int, MovieEntity> = movieDao.getFavoriteMovie()
+    fun getFavoriteMovies(): Flow<List<MovieEntity>> = movieDao.getFavoriteMovie()
 
-    fun getMoviesById(id: Int): LiveData<MovieEntity> = movieDao.getMovieById(id)
+//    fun getMoviesById(id: Int): Flow<MovieEntity> = movieDao.getMovieById(id)
 
-    fun insertMovie(movieEntity: List<MovieEntity>) = movieDao.insert(movieEntity)
+    suspend fun insertMovie(movieEntity: List<MovieEntity>) = movieDao.insert(movieEntity)
 
     fun updateMovie(movieEntity: MovieEntity) = movieDao.update(movieEntity)
 

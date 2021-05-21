@@ -1,6 +1,6 @@
 package com.mirfanrafif.kicksfilm.utils
 
-import com.mirfanrafif.kicksfilm.data.entities.MovieEntity
+import com.mirfanrafif.kicksfilm.data.source.local.entities.MovieEntity
 import com.mirfanrafif.kicksfilm.data.source.remote.responses.MovieItem
 import com.mirfanrafif.kicksfilm.domain.model.Movie
 
@@ -19,16 +19,18 @@ object DataMapper {
         }
     }
 
-    fun mapEntityToDomain(input: MovieEntity) : Movie = Movie(
-        id = input.id,
-        title = input.title,
-        overview = input.overview,
-        rating = input.rating,
-        year = input.year,
-        category = input.category,
-        photo = input.photo,
-        isFavorite = input.isFavorite
-    )
+    fun mapEntityToDomain(input: List<MovieEntity>) : List<Movie> = input.map {
+        Movie(
+            id = it.id,
+            title = it.title,
+            overview = it.overview,
+            rating = it.rating,
+            year = it.year,
+            category = it.category,
+            photo = it.photo,
+            isFavorite = it.isFavorite
+        )
+    }
 
     fun mapDomainToEntity(input: Movie): MovieEntity =
         MovieEntity(

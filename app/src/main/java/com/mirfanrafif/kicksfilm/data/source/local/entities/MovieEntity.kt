@@ -1,4 +1,4 @@
-package com.mirfanrafif.kicksfilm.data.entities
+package com.mirfanrafif.kicksfilm.data.source.local.entities
 
 import android.os.Parcelable
 import androidx.annotation.NonNull
