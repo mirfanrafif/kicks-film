@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mirfanrafif.kicksfilm.R
 import com.mirfanrafif.kicksfilm.databinding.ItemMoviesBinding
-import com.mirfanrafif.kicksfilm.domain.model.Movie
+import com.mirfanrafif.kicksfilm.core.domain.model.Movie
 import com.mirfanrafif.kicksfilm.ui.detail.DetailFilmActivity
 
 class MoviesAdapter: RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {

@@ -11,8 +11,8 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.mirfanrafif.kicksfilm.R
-import com.mirfanrafif.kicksfilm.data.FilmData
-import com.mirfanrafif.kicksfilm.utils.EspressoIdlingResource
+import com.mirfanrafif.kicksfilm.core.data.FilmData
+import com.mirfanrafif.kicksfilm.core.utils.EspressoIdlingResource
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

@@ -7,7 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import com.mirfanrafif.kicksfilm.R
 import com.mirfanrafif.kicksfilm.databinding.ActivityMainBinding
 import com.mirfanrafif.kicksfilm.ui.home.HomeActivity
-import com.mirfanrafif.kicksfilm.utils.EspressoIdlingResource
+import com.mirfanrafif.kicksfilm.core.utils.EspressoIdlingResource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

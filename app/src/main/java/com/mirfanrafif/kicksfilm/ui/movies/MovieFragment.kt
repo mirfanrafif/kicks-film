@@ -6,15 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.mirfanrafif.kicksfilm.data.Resource
 import com.mirfanrafif.kicksfilm.databinding.FragmentMovieBinding
-import com.mirfanrafif.kicksfilm.ui.viewmodel.ViewModelFactory
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MovieFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieBinding
+
+    private val viewModel: MoviesViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,17 +34,15 @@ class MovieFragment : Fragment() {
             binding.rvMovies.adapter = adapter
             binding.rvMovies.layoutManager = layoutManager
 
-            val factory = ViewModelFactory.getInstance(requireContext())
-            val viewModel = ViewModelProvider(requireActivity(), factory)[MoviesViewModel::class.java]
             viewModel.getAllMovies().observe(this, {
                 if (it != null) {
                     when(it) {
-                        is Resource.Loading -> binding.movieLoading.visibility = View.VISIBLE
-                        is Resource.Success -> {
+                        is com.mirfanrafif.kicksfilm.core.data.Resource.Loading -> binding.movieLoading.visibility = View.VISIBLE
+                        is com.mirfanrafif.kicksfilm.core.data.Resource.Success -> {
                             adapter.setData(it.data)
                             binding.movieLoading.visibility = View.GONE
                         }
-                        is Resource.Error -> {
+                        is com.mirfanrafif.kicksfilm.core.data.Resource.Error -> {
                             binding.movieLoading.visibility = View.GONE
                             Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
                         }
