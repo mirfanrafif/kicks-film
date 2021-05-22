@@ -2,12 +2,11 @@ package com.mirfanrafif.kicksfilm.ui.detail
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.mirfanrafif.kicksfilm.R
+import com.mirfanrafif.kicksfilm.core.domain.model.Movie
 import com.mirfanrafif.kicksfilm.databinding.ActivityDetailFilmBinding
-import com.mirfanrafif.kicksfilm.domain.model.Movie
-import com.mirfanrafif.kicksfilm.ui.viewmodel.ViewModelFactory
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailFilmActivity : AppCompatActivity() {
 
@@ -16,7 +15,7 @@ class DetailFilmActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityDetailFilmBinding
-    private lateinit var viewModel: DetailViewModel
+    private val viewModel: DetailViewModel by viewModel()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,9 +27,6 @@ class DetailFilmActivity : AppCompatActivity() {
 
         val movie = intent.getParcelableExtra<Movie>(EXTRA_MOVIE)
 
-
-        val factory = ViewModelFactory.getInstance(this)
-        viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
         if (movie != null) {
             viewModel.setMovie(movie)
             bindDataToView()

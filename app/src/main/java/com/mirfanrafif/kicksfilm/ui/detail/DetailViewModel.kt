@@ -3,8 +3,8 @@ package com.mirfanrafif.kicksfilm.ui.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.mirfanrafif.kicksfilm.domain.model.Movie
-import com.mirfanrafif.kicksfilm.domain.usecase.MovieUseCase
+import com.mirfanrafif.kicksfilm.core.domain.model.Movie
+import com.mirfanrafif.kicksfilm.core.domain.usecase.MovieUseCase
 
 class DetailViewModel(private val movieUseCase: MovieUseCase): ViewModel() {
 
