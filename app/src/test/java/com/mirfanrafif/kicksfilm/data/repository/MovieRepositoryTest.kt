@@ -13,12 +13,11 @@ import com.mirfanrafif.kicksfilm.utils.LiveDataTestUtil
 import com.mirfanrafif.kicksfilm.utils.PagedListUtil
 import com.mirfanrafif.kicksfilm.vo.Resource
 import com.nhaarman.mockitokotlin2.verify
-
-import org.junit.Test
-
-import org.junit.Assert.*
+import org.junit.Assert.assertNotNull
 import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 import org.mockito.junit.MockitoJUnitRunner
@@ -87,5 +86,23 @@ class MovieRepositoryTest {
         movieRepository.getFavoriteTvShows()
 
         verify(local).getFavoriteTvShow()
+    }
+
+
+    @Test
+    fun updateMovie() {
+
+        val movie = selectedMovie
+        movie.isFavorite = true
+
+        Mockito.doNothing().`when`(local).updateMovie(movie)
+    }
+
+    @Test
+    fun updateTvShow() {
+        val tvShowEntity = FilmData.getTVShows()[0]
+        tvShowEntity.isFavorite = true
+
+        Mockito.doNothing().`when`(local).updateTvShow(tvShowEntity)
     }
 }
