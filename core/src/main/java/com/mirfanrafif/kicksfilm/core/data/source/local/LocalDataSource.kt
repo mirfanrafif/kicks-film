@@ -5,7 +5,7 @@ import com.mirfanrafif.kicksfilm.core.data.source.local.entities.MovieEntity
 import kotlinx.coroutines.flow.Flow
 
 class LocalDataSource constructor(
-    private val movieDao: com.mirfanrafif.kicksfilm.core.data.source.local.dao.MovieDao
+    private val movieDao: MovieDao
 ){
 
     fun getAllMovies() : Flow<List<MovieEntity>> = movieDao.getAllMovies()

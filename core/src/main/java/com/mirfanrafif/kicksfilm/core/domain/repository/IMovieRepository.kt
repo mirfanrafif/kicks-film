@@ -5,7 +5,7 @@ import com.mirfanrafif.kicksfilm.core.domain.model.Movie
 import kotlinx.coroutines.flow.Flow
 
 interface IMovieRepository {
-    fun getAllMovies(): Flow<com.mirfanrafif.kicksfilm.core.data.Resource<List<Movie>>>
+    fun getAllMovies(): Flow<Resource<List<Movie>>>
 
     fun updateMovie(movie: Movie)
 

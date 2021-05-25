@@ -1,11 +1,9 @@
 package com.mirfanrafif.kicksfilm.core.di
 
 import androidx.room.Room
-import com.mirfanrafif.kicksfilm.core.data.source.local.LocalDataSource
-import com.mirfanrafif.kicksfilm.core.data.source.local.database.KicksFilmDB
+import com.mirfanrafif.kicksfilm.core.data.MovieRepository
 import com.mirfanrafif.kicksfilm.core.data.source.remote.RemoteDataSource
 import com.mirfanrafif.kicksfilm.core.data.source.remote.api.MovieApiService
-import com.mirfanrafif.kicksfilm.core.domain.repository.MovieRepository
 import com.mirfanrafif.kicksfilm.core.utils.AppExecutor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

@@ -1,7 +1,7 @@
 package com.mirfanrafif.kicksfilm.core.domain.usecase
 
+import com.mirfanrafif.kicksfilm.core.data.MovieRepository
 import com.mirfanrafif.kicksfilm.core.domain.model.Movie
-import com.mirfanrafif.kicksfilm.core.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
 
 class MovieInteractor(private val movieRepository: MovieRepository): MovieUseCase {
