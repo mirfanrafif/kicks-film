@@ -54,28 +54,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Deskripsi"
+        android:text="@string/deskripsi"
         app:layout_constraintStart_toStartOf="@+id/text_tahun"
         app:layout_constraintTop_toBottomOf="@+id/text_category" />
-
-    <TextView
-        android:id="@+id/director_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Director"
-        style="@style/Heading"
-        app:layout_constraintStart_toStartOf="@+id/text_description"
-        app:layout_constraintTop_toBottomOf="@+id/text_description" />
-
-    <TextView
-        android:id="@+id/text_director"
-        android:layout_width="wrap_content"
-        style="@style/Body"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/director_label"
-        app:layout_constraintTop_toBottomOf="@+id/director_label"
-        tools:text="Director" />
 
     <RatingBar
         android:id="@+id/ratingBar"

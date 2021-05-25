@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.splashscreen.MainActivity">
+    tools:context=".splashscreen.MainActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -15,14 +15,15 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/feet" />
+        app:srcCompat="@drawable/feet"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Kicks Film"
+        android:text="@string/app_name"
         style="@style/Heading"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
