@@ -15,16 +15,15 @@
         android:theme="@style/Theme.KicksFilm"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.favorite.FavoriteActivity" />
-        <activity android:name=".ui.splashscreen.MainActivity">
+        <activity android:name=".splashscreen.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.detail.DetailFilmActivity" />
-        <activity android:name=".ui.home.HomeActivity" />
+        <activity android:name=".detail.DetailFilmActivity" />
+        <activity android:name=".home.HomeActivity" />
     </application>
 
 </manifest>
