@@ -4,6 +4,7 @@ import androidx.room.Room
 import com.mirfanrafif.kicksfilm.core.data.MovieRepository
 import com.mirfanrafif.kicksfilm.core.data.source.remote.RemoteDataSource
 import com.mirfanrafif.kicksfilm.core.data.source.remote.api.MovieApiService
+import com.mirfanrafif.kicksfilm.core.domain.repository.IMovieRepository
 import com.mirfanrafif.kicksfilm.core.utils.AppExecutor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -45,5 +46,5 @@ val repositoryModule = module {
     single { com.mirfanrafif.kicksfilm.core.data.source.local.LocalDataSource(get()) }
     single { RemoteDataSource(get()) }
     single { AppExecutor() }
-    single<MovieRepository> { MovieRepository(get(), get(), get()) }
+    single<IMovieRepository> { MovieRepository(get(), get(), get()) }
 }
